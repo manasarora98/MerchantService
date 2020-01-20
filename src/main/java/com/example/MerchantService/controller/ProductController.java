@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "*",allowedHeaders = "*")
 @RestController
 @RequestMapping("/productList")
 public class ProductController {
@@ -22,8 +22,8 @@ public class ProductController {
     public ResponseEntity<Integer> addProduct(@RequestBody productListDto productListDto) {
         ProductList productList = new ProductList();
         BeanUtils.copyProperties(productListDto, productList);
-        ProductList productList1 = productListService.addProduct(productList);
-        return new ResponseEntity<Integer>(productList.getId(), HttpStatus.CREATED);
+        productListService.addProduct(productList);
+        return new ResponseEntity<>(productList.getId(), HttpStatus.CREATED);
 
     }
 
