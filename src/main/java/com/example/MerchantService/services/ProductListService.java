@@ -9,7 +9,7 @@ import java.util.List;
 public interface ProductListService {
     List<FinalDto> findByPid(String pid);
 
-    ProductList addProduct(ProductList productlist);
+    void addProduct(ProductList productlist);
 
     void updateProduct(ProductList productList);
 
