@@ -41,6 +41,21 @@ public class ProductController {
         return productListService.findByPid(id);
 
     }
+    ///After order is placed
+    @PostMapping("/updateStock/{productId}/{merchantId}/{quantity}")
+    public void updateStock(@PathVariable("productId") String productId,@PathVariable("merchantId") String merchantId,@PathVariable("quantity") int quantity){
+          productListService.updateStock(productId,merchantId,quantity);
+    }
+
+    @GetMapping("/getProductNames/{merchantId}")
+    public String getMerchantNames(@PathVariable("merchantId") String merchantId){
+       return   productListService.getProductNames(merchantId);
+    }
+
+
+
+
+
 }
 
 

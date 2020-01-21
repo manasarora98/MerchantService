@@ -13,5 +13,9 @@ public interface ProductListService {
 
     void updateProduct(ProductList productList);
 
+    void updateStock(String productId,String merchantId,int quantity);
+
+    String getProductNames(String merchantId);
+
 
 }

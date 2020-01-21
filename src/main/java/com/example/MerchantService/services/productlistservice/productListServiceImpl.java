@@ -5,6 +5,7 @@ import com.example.MerchantService.entity.ProductList;
 import com.example.MerchantService.repositories.MerchantRepository;
 import com.example.MerchantService.repositories.ProductListRepository;
 import com.example.MerchantService.services.Merchantservice;
+import com.example.MerchantService.services.ProductFeign;
 import com.example.MerchantService.services.ProductListService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class productListServiceImpl implements ProductListService {
     ProductListRepository productListRepository;
     @Autowired
     Merchantservice merchantservice;
+    @Autowired
+    ProductFeign productFeign;
 
     @Override
     public void addProduct(ProductList productlist) {
@@ -54,6 +57,18 @@ public class productListServiceImpl implements ProductListService {
     @Transactional
     public void updateProduct(ProductList productList) {
         productListRepository.update(productList.getPrice(), productList.getStock(), productList.getMerchantId(), productList.getProductId());
+    }
+
+    @Override
+    public void updateStock(String productId,String merchantId,int stock){
+        productListRepository.updateQuantity(stock,productId,merchantId);
+
+    }
+
+    @Override
+    public String getProductNames(String merchantId){
+        String name = productFeign.getNamesFeign(merchantId);
+        return name;
     }
 
 

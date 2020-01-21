@@ -16,4 +16,10 @@ public interface ProductListRepository  extends CrudRepository<ProductList,Integ
 
     List<ProductList> findAllByProductId(String id);
 
+    @Query(value = "Update product_list set stock =?1 where user_id =?2 and merchant_id=?3",nativeQuery=true)
+    void updateQuantity(int stock, String userId,String merchantId);
+
+   //  List<ProductList> findByMerchantIdAndProductId(String merchantId, String productId,int quantity);
+
+
 }
