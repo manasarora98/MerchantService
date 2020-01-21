@@ -25,6 +25,8 @@ public class MerchantController {
     public Merchant getMerchant(@PathVariable("id") Integer id){
         return merchantservice.getMerchant(id);
     }
+
+
     @GetMapping(value = "getMerchantRating/{id}")
     public Double getMerchantRating(@PathVariable("id") Integer id){
         return  merchantservice.getRating(id);

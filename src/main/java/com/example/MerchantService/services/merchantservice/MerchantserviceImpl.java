@@ -30,6 +30,7 @@ public class MerchantserviceImpl implements Merchantservice {
         return merchant.get();
 
     }
+
     @Override
     public  Double getRating(Integer id){
         Optional<Merchant> merchant= merchantRepository.findById(id);
