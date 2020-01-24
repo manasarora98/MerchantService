@@ -32,4 +32,10 @@ public class MerchantController {
         return  merchantservice.getRating(id);
     }
 
+    @PostMapping(value = "setMerchantRating/{id}/{rating}")
+    public boolean setMerchantRating(@PathVariable("id") Integer id,@PathVariable("rating") double rating){
+        merchantservice.setMerchantRating(id,rating);
+        return true;
+    }
+
 }

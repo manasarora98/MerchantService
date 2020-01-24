@@ -1,6 +1,8 @@
 package com.example.MerchantService.services.productlistservice;
 
 import com.example.MerchantService.dtos.FinalDto;
+import com.example.MerchantService.dtos.ProductIdAndNamesDTO;
+import com.example.MerchantService.dtos.productListDto;
 import com.example.MerchantService.entity.ProductList;
 import com.example.MerchantService.repositories.MerchantRepository;
 import com.example.MerchantService.repositories.ProductListRepository;
@@ -8,6 +10,7 @@ import com.example.MerchantService.services.Merchantservice;
 import com.example.MerchantService.services.ProductFeign;
 import com.example.MerchantService.services.ProductListService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,16 +63,47 @@ public class productListServiceImpl implements ProductListService {
     }
 
     @Override
-    public void updateStock(String productId,String merchantId,int stock){
-        productListRepository.updateQuantity(stock,productId,merchantId);
+    @Transactional
+    public void updateStock(String productId,Integer merchantId,int stock){
+        int updatedStock = productListRepository.getStock(productId,merchantId);
+        productListRepository.updateQuantity(updatedStock-stock,productId,Integer.valueOf(merchantId));
+        if(updatedStock-stock == 0){
+            productListRepository.deleteProduct(productId,merchantId);
+        }
 
     }
 
     @Override
-    public String getProductNames(String merchantId){
-        String name = productFeign.getNamesFeign(merchantId);
-        return name;
+    public List<ProductIdAndNamesDTO> getProductNames(Integer merchantId){
+        List<ProductList> productLists = productListRepository.findAllByMerchantId(merchantId);
+        List<String> ids = new ArrayList<>();
+        for (ProductList productList:productLists){
+           productListDto productListDto1 = new productListDto();
+           BeanUtils.copyProperties(productList,productListDto1);
+           ids.add(productListDto1.getProductId());
+
+        }
+        List<ProductIdAndNamesDTO> productIdAndNamesDTOSlist = new ArrayList<>();
+        List<String> names = productFeign.getNamesFeign(ids);
+       for(int i=0;i<ids.size();i++){
+           ProductIdAndNamesDTO productIdAndNamesDTOS=new ProductIdAndNamesDTO();
+           productIdAndNamesDTOS.setProductId(ids.get(i));
+//           productIdAndNamesDTOS.setProductName((names.get(i)));
+           productIdAndNamesDTOSlist.add(productIdAndNamesDTOS);
+
+       }
+       for(int j=0;j<names.size();j++){
+           productIdAndNamesDTOSlist.get(j).setProductName(names.get(j));
+       }
+
+       return productIdAndNamesDTOSlist;
     }
 
 
+    @Override
+    public boolean checkStockFeign(String productId, Integer merchantId, Integer quantity) {
+        int totalStock = productListRepository.getStock(productId,merchantId);
+        if(totalStock >= quantity) return true;
+        return false;
+    }
 }

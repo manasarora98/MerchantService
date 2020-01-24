@@ -17,4 +17,6 @@ public interface Merchantservice {
     Merchant getMerchant(Integer id);
 
     Double getRating(Integer id);
+
+    void setMerchantRating(Integer id,double rating);
 }
