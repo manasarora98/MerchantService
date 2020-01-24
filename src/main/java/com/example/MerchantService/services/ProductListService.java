@@ -1,6 +1,7 @@
 package com.example.MerchantService.services;
 
 import com.example.MerchantService.dtos.FinalDto;
+import com.example.MerchantService.dtos.ProductIdAndNamesDTO;
 import com.example.MerchantService.entity.ProductList;
 
 import java.util.List;
@@ -13,9 +14,13 @@ public interface ProductListService {
 
     void updateProduct(ProductList productList);
 
-    void updateStock(String productId,String merchantId,int quantity);
+    void updateStock(String productId,Integer merchantId,int quantity);
 
-    String getProductNames(String merchantId);
+    List<ProductIdAndNamesDTO> getProductNames(Integer merchantId);
+
+    boolean checkStockFeign(String productId,Integer merchantId,Integer quantity);
+
+
 
 
 }

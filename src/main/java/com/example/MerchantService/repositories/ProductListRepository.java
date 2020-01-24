@@ -1,6 +1,7 @@
 package com.example.MerchantService.repositories;
 
 import com.example.MerchantService.entity.ProductList;
+import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -16,10 +17,28 @@ public interface ProductListRepository  extends CrudRepository<ProductList,Integ
 
     List<ProductList> findAllByProductId(String id);
 
-    @Query(value = "Update product_list set stock =?1 where user_id =?2 and merchant_id=?3",nativeQuery=true)
-    void updateQuantity(int stock, String userId,String merchantId);
+    @Modifying
+    @Query(value = "Update product_list set stock =?1 where product_id =?2 and merchant_id=?3",nativeQuery=true)
+    void updateQuantity(int stock, String productId,Integer merchantId);
 
    //  List<ProductList> findByMerchantIdAndProductId(String merchantId, String productId,int quantity);
+
+   /* @Query(value = "Update product_list set rating =?3 where product_id =?2 and merchant_id=?3",nativeQuery=true)
+    void setProductRating(String productId, String merchantId,int rating);*/
+
+   List<ProductList> findAllByMerchantId(Integer id);
+
+   @Query(value = "Select stock from product_list where product_id=?1 and merchant_id=?2", nativeQuery = true)
+   int getStock(String productId,Integer merchantId);
+
+   @Modifying
+   @Query(value = "Delete from product_list where product_id=?1 and merchant_id=?2",nativeQuery = true)
+    void deleteProduct(String productId,Integer merchantId);
+
+
+
+
+
 
 
 }
