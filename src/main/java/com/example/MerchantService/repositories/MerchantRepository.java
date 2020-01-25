@@ -12,4 +12,7 @@ public interface MerchantRepository extends CrudRepository<Merchant,Integer> {
     @Modifying
     @Query(value = "Update merchant set rating=?2 where id=?1",nativeQuery = true)
     void setMerchantRating(Integer id,double rating);
+
+    Merchant findByEmail(String email);
+
 }
