@@ -12,6 +12,8 @@ import com.example.MerchantService.services.ProductListService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -27,6 +29,9 @@ public class productListServiceImpl implements ProductListService {
     Merchantservice merchantservice;
     @Autowired
     ProductFeign productFeign;
+
+    @Autowired
+    KafkaTemplate<String,String> kafkaTemplate;
 
     @Override
     public void addProduct(ProductList productlist) {
@@ -69,6 +74,13 @@ public class productListServiceImpl implements ProductListService {
         productListRepository.updateQuantity(updatedStock-stock,productId,Integer.valueOf(merchantId));
         if(updatedStock-stock == 0){
             productListRepository.deleteProduct(productId,merchantId);
+
+            boolean result =  productListRepository.checkIfProductIsPresent(productId);
+
+            if(result == false)
+                this.kafkaTemplate.send("productDelete",productId);
+
+
         }
 
     }
