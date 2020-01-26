@@ -49,6 +49,7 @@ public class MerchantserviceImpl implements Merchantservice {
     public void save(Merchant merchantEntity) {
         merchantRepository.save(merchantEntity);
     }
+
     @Override
     public Merchant findByEmail(Merchant merchantEntity) {
         Merchant merchant =  merchantRepository.findByEmail(merchantEntity.getEmail());
@@ -57,6 +58,6 @@ public class MerchantserviceImpl implements Merchantservice {
         if(pass1.equals(pass2) && merchant != null){
             return merchant;
         }
-        return  merchant;
+        else{ return null;  }
     }
 }

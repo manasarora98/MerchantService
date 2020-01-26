@@ -67,6 +67,12 @@ public class ProductController {
 
     }
 
+    @PostMapping("/setProductRating/{productId}/{rating}")
+    boolean setProductRating(@PathVariable("productId") String productId, @PathVariable("rating") double rating){
+        productListService.setProductRating(productId,rating);
+        return true;
+    }
+
 
 
 

@@ -40,10 +40,7 @@ public interface ProductListRepository  extends CrudRepository<ProductList,Integ
     boolean checkIfProductIsPresent(String productId);
 
 
-
-
-
-
-
-
+    @Modifying
+    @Query(value = "update product_list set rating = ?2 where product_id=?1",nativeQuery = true)
+    void setProductRating(String productId, double rating);
 }

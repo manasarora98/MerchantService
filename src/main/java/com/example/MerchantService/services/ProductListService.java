@@ -21,6 +21,5 @@ public interface ProductListService {
     boolean checkStockFeign(String productId,Integer merchantId,Integer quantity);
 
 
-
-
+    void setProductRating(String productId, double rating);
 }

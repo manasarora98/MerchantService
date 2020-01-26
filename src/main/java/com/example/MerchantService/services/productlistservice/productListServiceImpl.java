@@ -118,4 +118,10 @@ public class productListServiceImpl implements ProductListService {
         if(totalStock >= quantity) return true;
         return false;
     }
+
+    @Override
+    @Transactional
+    public void setProductRating(String productId, double rating) {
+        productListRepository.setProductRating(productId,rating);
+    }
 }
