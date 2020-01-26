@@ -19,4 +19,9 @@ public interface Merchantservice {
     Double getRating(Integer id);
 
     void setMerchantRating(Integer id,double rating);
+
+    void save(Merchant merchantEntity);
+
+    Merchant findByEmail(Merchant merchantEntity);
+
 }

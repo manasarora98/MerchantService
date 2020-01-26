@@ -36,6 +36,11 @@ public interface ProductListRepository  extends CrudRepository<ProductList,Integ
     void deleteProduct(String productId,Integer merchantId);
 
 
+    @Query(value = "Select (case when count(product_id)>0 then true else false end) from Product_list where product_id=?1",nativeQuery = true)
+    boolean checkIfProductIsPresent(String productId);
+
+
+
 
 
 

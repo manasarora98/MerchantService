@@ -44,4 +44,19 @@ public class MerchantserviceImpl implements Merchantservice {
     public void setMerchantRating(Integer id, double rating) {
         merchantRepository.setMerchantRating(id,rating);
     }
+
+    @Override
+    public void save(Merchant merchantEntity) {
+        merchantRepository.save(merchantEntity);
+    }
+    @Override
+    public Merchant findByEmail(Merchant merchantEntity) {
+        Merchant merchant =  merchantRepository.findByEmail(merchantEntity.getEmail());
+        String pass1 = String.valueOf(merchant.getPassword().hashCode());
+        String pass2 = String.valueOf(merchantEntity.getPassword().hashCode());
+        if(pass1.equals(pass2) && merchant != null){
+            return merchant;
+        }
+        return  merchant;
+    }
 }
