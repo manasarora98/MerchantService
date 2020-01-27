@@ -28,7 +28,7 @@ public interface ProductListRepository  extends CrudRepository<ProductList,Integ
 
    List<ProductList> findAllByMerchantId(Integer id);
 
-   @Query(value = "Select stock from product_list where product_id=?1 and merchant_id=?2", nativeQuery = true)
+   @Query(value = "Select sum(stock) from product_list where product_id=?1 and merchant_id=?2", nativeQuery = true)
    int getStock(String productId,Integer merchantId);
 
    @Modifying

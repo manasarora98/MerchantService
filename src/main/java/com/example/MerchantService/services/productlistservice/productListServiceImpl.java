@@ -69,20 +69,22 @@ public class productListServiceImpl implements ProductListService {
 
     @Override
     @Transactional
-    public void updateStock(String productId,Integer merchantId,int stock){
-        int updatedStock = productListRepository.getStock(productId,merchantId);
-        productListRepository.updateQuantity(updatedStock-stock,productId,Integer.valueOf(merchantId));
-        if(updatedStock-stock == 0){
-            productListRepository.deleteProduct(productId,merchantId);
+    public void updateStock(String productId,Integer merchantId,int stock) {
+        int updatedStock = productListRepository.getStock(productId, merchantId);
+        productListRepository.updateQuantity(updatedStock - stock, productId, Integer.valueOf(merchantId));
+        if (updatedStock - stock == 0) {
+            productListRepository.deleteProduct(productId, merchantId);
 
-            boolean result =  productListRepository.checkIfProductIsPresent(productId);
+            boolean result = productListRepository.checkIfProductIsPresent(productId);
 
-            if(result == false)
-                this.kafkaTemplate.send("productDelete",productId);
+            if (result == false) {
+             //   this.kafkaTemplate.send("productDelete", productId);
+              //  productFeign.removeProduct(productId);
 
+
+            }
 
         }
-
     }
 
     @Override
@@ -124,4 +126,10 @@ public class productListServiceImpl implements ProductListService {
     public void setProductRating(String productId, double rating) {
         productListRepository.setProductRating(productId,rating);
     }
+
+    @Override
+    public List<ProductList> getProductListOfMerchant(Integer merchantId) {
+       return  productListRepository.findAllByMerchantId(merchantId);
+    }
 }
+

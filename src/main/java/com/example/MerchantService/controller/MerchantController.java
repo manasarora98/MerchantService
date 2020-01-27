@@ -22,12 +22,13 @@ public class MerchantController {
     @Autowired
     JwtGenerator jwtGenerator;
     @PostMapping("/register")
-    public void register(@RequestBody MerchantDto merchantDto)
+    public Merchant register(@RequestBody MerchantDto merchantDto)
     {
         Merchant merchantEntity=new Merchant();
         BeanUtils.copyProperties(merchantDto,merchantEntity);
-        merchantservice.save(merchantEntity);
+        return merchantservice.save(merchantEntity);
     }
+
     @PostMapping("/login")
     public AccessTokenDto login(@RequestBody MerchantDto merchantDto){
         AccessTokenDto accessTokenDto = new AccessTokenDto();
@@ -38,6 +39,7 @@ public class MerchantController {
             String accessToken =  jwtGenerator.generateToken(merchantEntity);
             accessTokenDto.setAccessToken(accessToken);
             accessTokenDto.setUserId(merchantExist.getId());
+            accessTokenDto.setEmail(merchantExist.getEmail());
             return accessTokenDto;
         }else{
             return new AccessTokenDto();
@@ -66,6 +68,8 @@ public class MerchantController {
         merchantservice.setMerchantRating(id,rating);
         return true;
     }
+
+
 
 
 

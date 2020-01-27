@@ -20,7 +20,7 @@ public interface Merchantservice {
 
     void setMerchantRating(Integer id,double rating);
 
-    void save(Merchant merchantEntity);
+    Merchant save(Merchant merchantEntity);
 
     Merchant findByEmail(Merchant merchantEntity);
 

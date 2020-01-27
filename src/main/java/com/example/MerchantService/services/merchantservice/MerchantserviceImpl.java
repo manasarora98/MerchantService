@@ -46,8 +46,15 @@ public class MerchantserviceImpl implements Merchantservice {
     }
 
     @Override
-    public void save(Merchant merchantEntity) {
-        merchantRepository.save(merchantEntity);
+    public Merchant save(Merchant merchantEntity) {
+        Merchant merchant = merchantRepository.findByEmail(merchantEntity.getEmail());
+        if(merchant == null){
+           Merchant merchant1 =  merchantRepository.save(merchantEntity);
+            return merchant1;
+        }else{
+            return null;
+        }
+
     }
 
     @Override

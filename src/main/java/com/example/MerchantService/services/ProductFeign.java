@@ -12,4 +12,10 @@ import java.util.List;
 public interface ProductFeign {
     @RequestMapping(method = RequestMethod.POST , value = "product/getNamesFeign")
     List<String> getNamesFeign(@RequestBody List<String> productIds);
+
+    @RequestMapping(method = RequestMethod.POST , value = "product/removeProduct/{productId}")
+    public void removeProduct(@PathVariable("productId") String productId);
+
 }
+
+

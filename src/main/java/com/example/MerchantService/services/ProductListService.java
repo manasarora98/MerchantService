@@ -22,4 +22,6 @@ public interface ProductListService {
 
 
     void setProductRating(String productId, double rating);
+
+    List<ProductList> getProductListOfMerchant(Integer merchantId);
 }

@@ -73,6 +73,11 @@ public class ProductController {
         return true;
     }
 
+    @GetMapping("/getProductListOfA Merchant/{merchantId}")
+    List<ProductList> getProductListOfMerchant(@PathVariable Integer merchantId){
+       return  productListService.getProductListOfMerchant(merchantId);
+    }
+
 
 
 
