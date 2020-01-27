@@ -60,11 +60,18 @@ public class MerchantserviceImpl implements Merchantservice {
     @Override
     public Merchant findByEmail(Merchant merchantEntity) {
         Merchant merchant =  merchantRepository.findByEmail(merchantEntity.getEmail());
+        if(merchant == null){
+            return null;
+        }
         String pass1 = String.valueOf(merchant.getPassword().hashCode());
         String pass2 = String.valueOf(merchantEntity.getPassword().hashCode());
-        if(pass1.equals(pass2) && merchant != null){
+        //if(pass1.isEmpty() || pass2.isEmpty()) return null;
+        if((pass1.equals(pass2)) && (merchant != null)){
             return merchant;
         }
-        else{ return null;  }
+        else{ return null;
+        }
     }
+
+
 }
