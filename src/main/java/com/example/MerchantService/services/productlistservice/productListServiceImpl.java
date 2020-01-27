@@ -30,8 +30,8 @@ public class productListServiceImpl implements ProductListService {
     @Autowired
     ProductFeign productFeign;
 
-    @Autowired
-    KafkaTemplate<String,String> kafkaTemplate;
+  /*  @Autowired
+    KafkaTemplate<String,String> kafkaTemplate;*/
 
     @Override
     public void addProduct(ProductList productlist) {
